@@ -1,11 +1,6 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:6-alpine'
-      args '3000:3000'
-    }
+  agent { node { label 'master' } }
     
-  }
   stages {
     stage('build') {
       steps {
