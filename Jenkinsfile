@@ -29,6 +29,7 @@ pipeline {
     
   stages {
     stage('helm test') {
+      steps {
      // run helm chart linter
       helmLint(chart_dir)
 
@@ -40,11 +41,11 @@ pipeline {
         tag           : build_tag,
         replicas      : config.app.replicas,
        )
-
+      }
     }
     
     stage ('helm deploy') {
-      
+      steps {
       // Deploy using Helm chart
       helmDeploy(
         dry_run       : false,
@@ -53,7 +54,7 @@ pipeline {
         tag           : build_tag,
         replicas      : config.app.replicas,
       )
-
+     }
      }
     }
     
