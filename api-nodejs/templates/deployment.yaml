@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: api-nodejs
+    version: v1.0.0
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: {{ template "api-nodejs.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: api-nodejs
+        version: v1.0.0
+    spec:
+      containers:
+      - image: index.docker.io/servolabone/sandbox:servolab-prod-env
+        name: {{ .Chart.Name }}
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/src/app/functions/cfg.js
+          subPath: cfg.js
+          name: api-nodejs-claim0
+        - mountPath: /usr/src/app/other/servolab-sandbox-firebase-adminsdk.json
+          subPath: servolab-sandbox-firebase-adminsdk.json
+          name: api-nodejs-claim1
+      restartPolicy: Always
+      volumes:
+      - name: api-nodejs-claim0
+        configMap:
+          name: cfg-js
+      - name: api-nodejs-claim1
+        configMap:
+          name: firebase-json
+      imagePullSecrets:
+      - name: regcred
+status: {}
+

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "api-nodejs.fullname" . }}
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+  - host: test-nodejs.vpnshieldapp.com
+    http:
+      paths:
+       - backend:
+          serviceName: {{ template "api-nodejs.fullname" . }}
+          servicePort: 3000
+         path: /
+  tls:
+  - hosts:
+    - test-nodejs.vpnshieldapp.com
+    secretName: test-nodejs.vpnshieldapp.com-tls
+
