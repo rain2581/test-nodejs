@@ -44,20 +44,19 @@ pipeline {
        )
       }
     }
-    
-    stage ('helm deploy') {
-      steps {
-      // Deploy using Helm chart
-	 echo 'Deploy api-nodejs'
-      helmDeploy(
-        dry_run       : false,
-        name          : config.app.name,
-        chart_dir     : chart_dir,
-        tag           : build_tag,
-        replicas      : config.app.replicas,
-      )
-     }
-     }
+  
+//    stage ('helm deploy') {
+//      steps {
+//      echo "Deploy api-nodejs"
+//      helmDeploy(
+//        dry_run       : false,
+//        name          : config.app.name,
+//        chart_dir     : chart_dir,
+//        tag           : build_tag,
+//        replicas      : config.app.replicas,
+//      )
+//     }
+//     }
     }
     
   }
