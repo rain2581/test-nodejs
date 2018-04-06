@@ -25,7 +25,7 @@ def helmDeploy(Map args) {
     }
 }
 pipeline {
-  agent { node { label 'master' } }
+  agent any
     
   stages {
     stage('helm test') {
