@@ -1,24 +1,7 @@
-pipeline {
-    agent none
-    stages {
-        stage('Build') { 
-            steps {
-                // 
-               sh 'hostname'
-            }
-        }
-        stage('Test') { 
-            steps {
-                //
-               sh 'ls -lh' 
-            }
-        }
-        stage('Deploy') { 
-            steps {
-                // 
-               sh 'pwd'
-               sh 'find / -name kubectl'
-            }
-        }
+node {
+  stage('List pods') {
+    withKubeConfig([credentialsId: '<credential-id>', caCertificate: '<ca-certificate>', serverUrl: '<api-server-address>']) {
+      sh 'kubectl get pods'
     }
+  }
 }
