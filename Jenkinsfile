@@ -32,6 +32,7 @@ pipeline {
       steps {
      // run helm chart linter
       helmLint(chart_dir)
+      kubectlTest()
 
     // run dry-run helm chart installation
       helmDeploy(
@@ -47,6 +48,7 @@ pipeline {
     stage ('helm deploy') {
       steps {
       // Deploy using Helm chart
+	 echo 'Deploy api-nodejs'
       helmDeploy(
         dry_run       : false,
         name          : config.app.name,
