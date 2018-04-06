@@ -30,6 +30,7 @@ pipeline {
   stages {
     stage('helm test') {
       steps {
+      echo "Deploy api-nodejs"
      // run helm chart linter
       helmLint(chart_dir)
       kubectlTest()
