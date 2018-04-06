@@ -1,3 +1,5 @@
+#!groovy
+
 def kubectlTest() {
     // Test that kubectl can correctly communication with the Kubernetes API
     echo "running kubectl test"
