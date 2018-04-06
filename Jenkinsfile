@@ -1,65 +1,13 @@
-#!groovy
 
-def kubectlTest() {
-    // Test that kubectl can correctly communication with the Kubernetes API
-    echo "running kubectl test"
-    sh "kubectl get nodes"
+podTemplate(label: 'jenkins-pipeline', containers: [
+   containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.6.0', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.4.8', command: 'cat', ttyEnabled: true)
+],
+node ('jenkins-pipeline') {
+	stage 'Kubectl test'
+        container('kubectl') {
+          stage 'Get nodes'
+          sh 'kubectl get nodes'   
+        }
 }
 
-def helmLint(String chart_dir) {
-    // lint helm chart
-    sh "/usr/local/bin/helm lint ${chart_dir}"
-
-}
-
-def helmDeploy(Map args) {
-    //configure helm client and confirm tiller process is installed
-
-    if (args.dry_run) {
-        println "Running dry-run deployment"
-
-        sh "/usr/local/bin/helm upgrade --dry-run --debug --install ${args.name} ${args.chart_dir} --set ImageTag=${args.tag},Replicas=${args.replicas} --namespace=${args.name}"
-    } else {
-        println "Running deployment"
-        sh "/usr/local/bin/helm upgrade --install ${args.name} ${args.chart_dir} --set ImageTag=${args.tag},Replicas=${args.replicas} --namespace=${args.name}"
-
-        echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
-    }
-}
-pipeline {
-  agent any
-    
-  stages {
-    stage('helm test') {
-      steps {
-      echo "Deploy api-nodejs"
-     // run helm chart linter
-      helmLint(chart_dir)
-      kubectlTest()
-
-    // run dry-run helm chart installation
-      helmDeploy(
-        dry_run       : true,
-        name          : config.app.name,
-        chart_dir     : chart_dir,
-        tag           : build_tag,
-        replicas      : config.app.replicas,
-       )
-      }
-    }
-  
-//    stage ('helm deploy') {
-//      steps {
-//      echo "Deploy api-nodejs"
-//      helmDeploy(
-//        dry_run       : false,
-//        name          : config.app.name,
-//        chart_dir     : chart_dir,
-//        tag           : build_tag,
-//        replicas      : config.app.replicas,
-//      )
-//     }
-//     }
-    }
-    
-  }
