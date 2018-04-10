@@ -12,6 +12,7 @@ def helmConfig() {
     println "initiliazing helm client"
     println "checking client/server version"
     sh "helm version"
+    sh "helm list"
 }
 
 podTemplate(label: 'jenkins-pipeline', containers: [
