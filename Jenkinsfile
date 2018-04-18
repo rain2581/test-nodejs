@@ -11,8 +11,8 @@ def helmConfig() {
     //setup helm connectivity to Kubernetes API and Tiller
     println "initiliazing helm client"
     println "checking client/server version"
-    sh "kubectl version"
-    sh "kubectl get namaspaces"
+//    sh "kubectl version"
+//    sh "kubectl get namaspaces"
     sh "helm version"
     sh "helm list"
 }
