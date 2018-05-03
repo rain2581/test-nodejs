@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: {{ .Chart.Name }}
+    io.kompose.service: {{ template "api-nodejs.fullname" . }}
     version: v1.0.0
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
   name: {{ template "api-nodejs.fullname" . }}
@@ -13,12 +13,12 @@ spec:
   template:
     metadata:
       labels:
-        io.kompose.service: api-nodejs
+        io.kompose.service: {{ template "api-nodejs.fullname" . }}
         version: v1.0.0
     spec:
       containers:
       - image: index.docker.io/servolabone/sandbox:servolab-prod-env
-        name: {{ .Chart.Name }}
+        name: {{ template "api-nodejs.fullname" . }}
         resources: {}
         volumeMounts:
         - mountPath: /usr/src/app/functions/cfg.js
@@ -31,10 +31,10 @@ spec:
       volumes:
       - name: api-nodejs-claim0
         configMap:
-          name: cfg-js.{{ .Chart.Name }}
+          name: cfg-js.{{ template "api-nodejs.fullname" . }}
       - name: api-nodejs-claim1
         configMap:
-          name: firebase-json.{{ .Chart.Name }}
+          name: firebase-json.{{ template "api-nodejs.fullname" . }}
       imagePullSecrets:
       - name: regcred
 status: {}
