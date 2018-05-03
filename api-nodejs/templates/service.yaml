@@ -12,7 +12,7 @@ spec:
     port: 3000
     targetPort: 3000
   selector:
-    io.kompose.service: api-nodejs
+    io.kompose.service: {{ .Chart.Name }}
     version: v1.0.0
 status:
   loadBalancer: {}

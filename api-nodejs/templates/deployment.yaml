@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: api-nodejs
+    io.kompose.service: {{ .Chart.Name }}
     version: v1.0.0
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
   name: {{ template "api-nodejs.fullname" . }}
@@ -31,10 +31,10 @@ spec:
       volumes:
       - name: api-nodejs-claim0
         configMap:
-          name: cfg-js
+          name: cfg-js.{{ .Chart.Name }}
       - name: api-nodejs-claim1
         configMap:
-          name: firebase-json
+          name: firebase-json.{{ .Chart.Name }}
       imagePullSecrets:
       - name: regcred
 status: {}
