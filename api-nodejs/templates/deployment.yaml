@@ -31,10 +31,10 @@ spec:
       volumes:
       - name: api-nodejs-claim0
         configMap:
-          name: cfg-js.{{ template "api-nodejs.fullname" . }}
+          name: cfg-js-{{ template "api-nodejs.fullname" . }}
       - name: api-nodejs-claim1
         configMap:
-          name: firebase-json.{{ template "api-nodejs.fullname" . }}
+          name: firebase-json-{{ template "api-nodejs.fullname" . }}
       imagePullSecrets:
       - name: regcred
 status: {}
