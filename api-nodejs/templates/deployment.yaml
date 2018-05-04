@@ -21,7 +21,7 @@ spec:
         name: {{ template "api-nodejs.fullname" . }}
         resources: {}
         env:
-        -name: BUILD_NUMBER
+        - name: BUILD_NUMBER
           value: "${BUILD_NUMBER}"
         volumeMounts:
         - mountPath: /usr/src/app/functions/cfg.js
