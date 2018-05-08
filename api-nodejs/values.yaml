@@ -1,4 +1,5 @@
 # Default values for test-nodejs
 replicaCount: 1
+BuildNumber: 1
 service:
   name: api-nodejs
