@@ -22,7 +22,7 @@ spec:
         resources: {}
         env:
         - name: BUILD_NUMBER
-          value: {{ .Values.BuildNumber }}
+          value: "{{ .Values.BuildNumber }}"
         volumeMounts:
         - mountPath: /usr/src/app/functions/cfg.js
           subPath: cfg.js
