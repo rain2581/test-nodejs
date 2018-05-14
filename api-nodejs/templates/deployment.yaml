@@ -17,7 +17,7 @@ spec:
         version: v1.0.0
     spec:
       containers:
-      - image: index.docker.io/servolabone/sandbox:servolab-prod-env
+      - image:  {{ .Values.ContainerImage }} 
         name: {{ template "api-nodejs.fullname" . }}
         resources: {}
         env:

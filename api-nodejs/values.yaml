@@ -1,5 +1,6 @@
 # Default values for test-nodejs
 replicaCount: 1
 BuildNumber: 1
+ContainerImage: index.docker.io/servolabone/sandbox:servolab-prod-env
 service:
   name: api-nodejs
