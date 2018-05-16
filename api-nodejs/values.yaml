@@ -4,3 +4,5 @@ BuildNumber: 1
 ContainerImage: index.docker.io/servolabone/sandbox:servolab-prod-env
 service:
   name: api-nodejs
+ingress:
+  serviceName: api-nodejs
