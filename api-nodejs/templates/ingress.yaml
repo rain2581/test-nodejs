@@ -11,7 +11,7 @@ spec:
     http:
       paths:
        - backend:
-          serviceName: {{ template "api-nodejs.fullname" . }}
+          serviceName: {{ .Values.ingress.serviceName }}
           servicePort: 3000
          path: /
   tls:
