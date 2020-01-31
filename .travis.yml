@@ -46,7 +46,7 @@ deploy:
       condition: ( "$TRAVIS_JDK_VERSION" = "openjdk8" )
   - skip_cleanup: true
     provider: script
-    script: echo "deploy to maven repository" && exit 1 || travis_terminate 1
+    script: echo "deploy to maven repository" && exit 1 || echo "ttt="$? || travis_terminate 1
     on:
       repo: rain2581/test-nodejs
       all_branches: true
