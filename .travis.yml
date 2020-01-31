@@ -38,7 +38,7 @@ before_deploy:
 deploy:
   - skip_cleanup: true
     provider: script
-    script: echo "deploy to maven repository" || travis_terminate 1
+    script: echo "deploy to maven repository" && exit 0 || travis_terminate 1
     on:
       repo: adorsys/xs2a
       all_branches: true
