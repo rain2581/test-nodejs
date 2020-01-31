@@ -22,11 +22,12 @@ before_script:
 
 script:
   - TRAVIS_JDK_VERSION=openjdk8 
+  - echo Travis=$TRAVIS_JDK_VERSION
   - MAVEN_OPTS="-Dlogging.level.root=warn -Dlogging.level.org.springframework.boot=warn -Dlogging.level.org.springframework.test=warn -Dlogging.level.org.hibernate=warn -Dlogging.level.de.adorsys=warn"
   - export MAVEN_OPTS
   - echo "Maven pmd check" || travis_terminate 1
   # JavaDocs are broken in Java 11 and fixed only in Java 12 : https://bugs.openjdk.java.net/browse/JDK-8212233
-  - if [ $TRAVIS_JDK_VERSION == openjdk8 ]; then echo "Maven create javadoc" || travis_terminate 1
+  - if [ $TRAVIS_JDK_VERSION == openjdk8 ]; then echo "Maven create javadoc"; fi || travis_terminate 1
   # Sonar analysis shall be run only for one version of Java
   - if [ $TRAVIS_JDK_VERSION == openjdk8 ]; then echo "Maven run sonarcloud"; fi || travis_terminate 1
 
