@@ -1,0 +1,54 @@
+---
+language: java
+
+jdk:
+  - openjdk8
+  - openjdk11
+
+git:
+  submodules: false
+
+cache:
+  timeout: 1000
+  directories:
+    - "$HOME/.m2"
+
+install:
+  - mvn --version
+
+before_script:
+  - mvn --version
+  - echo "TRAVIS_JDK_VERSION is $TRAVIS_JDK_VERSION"
+
+script:
+  - MAVEN_OPTS="-Dlogging.level.root=warn -Dlogging.level.org.springframework.boot=warn -Dlogging.level.org.springframework.test=warn -Dlogging.level.org.hibernate=warn -Dlogging.level.de.adorsys=warn"
+  - export MAVEN_OPTS
+  - echo "Maven pmd check" || travis_terminate 1
+  # JavaDocs are broken in Java 11 and fixed only in Java 12 : https://bugs.openjdk.java.net/browse/JDK-8212233
+  - if [ $TRAVIS_JDK_VERSION == openjdk8 ]; then echo "Maven create javadoc" || travis_terminate 1
+  # Sonar analysis shall be run only for one version of Java
+  - if [ $TRAVIS_JDK_VERSION == openjdk8 ]; then echo "Maven run sonarcloud"; fi || travis_terminate 1
+
+
+before_deploy:
+  - echo "create gpg key" || true
+
+deploy:
+  - skip_cleanup: true
+    provider: script
+    script: echo "deploy to maven repository" || travis_terminate 1
+    on:
+      repo: adorsys/xs2a
+      all_branches: true
+      condition: |-
+        ( ( $TRAVIS_TAG =~ ^([[:digit:]]+\.)+[[:digit:]]+(-(RC)?[[:digit:]]+)?([\.-]([[:digit:]]+\.)+[[:digit:]]+(-[[:digit:]]+)?)?$
+          || "$TRAVIS_BRANCH" = "develop" || "$TRAVIS_BRANCH" = "support-4.x" )
+        && "$TRAVIS_JDK_VERSION" = "openjdk8" )
+  - provider: pages
+    skip_cleanup: true
+    github-token: "$GITHUB_PAGES_TOKEN"
+    keep-history: false
+    local-dir: pages/html
+    on:
+      branch: develop
+      condition: ( "$TRAVIS_JDK_VERSION" = "openjdk8" )
