@@ -21,6 +21,7 @@ before_script:
   - echo "TRAVIS_JDK_VERSION is $TRAVIS_JDK_VERSION"
 
 script:
+  - TRAVIS_JDK_VERSION=openjdk8 
   - MAVEN_OPTS="-Dlogging.level.root=warn -Dlogging.level.org.springframework.boot=warn -Dlogging.level.org.springframework.test=warn -Dlogging.level.org.hibernate=warn -Dlogging.level.de.adorsys=warn"
   - export MAVEN_OPTS
   - echo "Maven pmd check" || travis_terminate 1
