@@ -40,7 +40,7 @@ deploy:
     provider: script
     script: echo "deploy to maven repository" && exit 0 || travis_terminate 1
     on:
-      repo: adorsys/xs2a
+      repo: rain2581/test-nodejs
       all_branches: true
       condition: |-
         ( ( $TRAVIS_TAG =~ ^([[:digit:]]+\.)+[[:digit:]]+(-(RC)?[[:digit:]]+)?([\.-]([[:digit:]]+\.)+[[:digit:]]+(-[[:digit:]]+)?)?$
